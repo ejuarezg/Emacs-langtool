@@ -1130,9 +1130,12 @@ Ordinary no need to change this."
       ;; jar Default setting is "HTTPSServer" .
       ;; This application no need to use SSL since local app.
       ;; http://wiki.languagetool.org/http-server
-      (setq args (append args (list
-                               "-cp" (langtool--process-file-name
-                                      langtool-language-tool-server-jar))))
+      ;; The following 5 lines are a workaround from https://github.com/mhayashi1120/Emacs-langtool/issues/40
+      (setq args (append args (list "-cp"
+                            (format "%s:%s"
+                                    langtool-java-classpath
+                                    (langtool--process-file-name
+                                     langtool-language-tool-server-jar)))))
       (setq args (append args (list "org.languagetool.server.HTTPServer")))
       (setq args (append args langtool-server-user-arguments))
       (langtool--debug "HTTPServer" "%s: %s" bin args)
