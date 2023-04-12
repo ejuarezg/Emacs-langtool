@@ -13,6 +13,28 @@ desired. And put the following expression into your ~/.emacs.
 (require 'langtool)
 ```
 
+Or use Melpa (https://melpa.org/)
+
+## NOTE (2023-01-25)
+
+Confirmed working on following environment
+
+### Java
+
+`java --version`
+
+> openjdk 17.0.4 2022-07-19  
+> OpenJDK Runtime Environment (build 17.0.4+8-Debian-1deb11u1)  
+> OpenJDK 64-Bit Server VM (build 17.0.4+8-Debian-1deb11u1, mixed mode, sharing)
+
+### LanguageTool
+
+Can be downloaded from [here](https://languagetool.org/download/)
+
+`java -jar languagetool-commandline.jar --version`
+
+> LanguageTool version 6.0 (2022-12-29 12:13:11 +0000, e44dbb0)
+
 ## Settings (required):
 
 langtool.el have 3 types of client.
@@ -86,7 +108,7 @@ testing, so please open issue when the ssl/tls connection is not working.
 (global-set-key "\C-x4W" 'langtool-check-done)
 (global-set-key "\C-x4l" 'langtool-switch-default-language)
 (global-set-key "\C-x44" 'langtool-show-message-at-point)
-(global-set-key "\C-x4c" 'langtool-correct-buffer)
+(global-set-key "\C-x4c" 'langtool-interactive-correction)
 ```
 
 * Default language is detected by LanguageTool automatically.
@@ -164,25 +186,8 @@ M-x langtool-correct-buffer
 M-x langtool-show-message-at-point
 ```
 
-* Show LanguageTool report automatically by `popup`
-  This idea come from:
-  https://laclefyoshi.hatenablog.com/entry/20150912/langtool_popup
-
-```
-(defun langtool-autoshow-detail-popup (overlays)
-  (when (require 'popup nil t)
-    ;; Do not interrupt current popup
-    (unless (or popup-instances
-                ;; suppress popup after type `C-g` .
-                (memq last-command '(keyboard-quit)))
-      (let ((msg (langtool-details-error-message overlays)))
-        (popup-tip msg)))))
-```
-
-```
-(setq langtool-autoshow-message-function
-      'langtool-autoshow-detail-popup)
-```
+* You can optionally use extension package `langtool-popup` in this repository.
+  To show automatically popup the cursor.
 
 * To finish checking. All langtool marker is removed.
 

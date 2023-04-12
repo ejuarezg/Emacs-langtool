@@ -5,12 +5,7 @@
 Build new JDK to try the newest LanguageTool.
 https://wiki.debian.org/JavaPackage
 
-
-
 # Test
-
-## create .test-init.el
-   To indicate `langtool-language-tool-jar`
 
 ## make check
 
@@ -39,9 +34,14 @@ Try to correct buffer (C-x 4 c)
 
 # TODO
 
-unsupport 3.x
+- more unit test ( for each 4.x )
+- check version dependent code. (old code is remaining)
+- automated build/test on Github Action (27.x, 28.x, latest)
+- langtool-popup.el: langtool-details-error-message -> langtool-simple-error-message as customize option
 
-more unit test ( for each 4.x )
+# Release
 
-check version dependent code. (old code is remaining)
-
+1. Test (`make check` and manual test)
+2. Add tag (`git tag **version**`) if enough changes (for stable melpa)
+   If extra package should append prefix before **version** (which depend on melpa recipe :version-regexp).
+3. `git push` && `git push --tags`
